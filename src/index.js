@@ -9,4 +9,8 @@ const virtualDOM = (
   </div>
 )
 
-console.log(JSON.stringify(virtualDOM));
+const root = document.getElementById('root');
+
+TinyReact.render(virtualDOM, root);
+
+// console.log(JSON.stringify(virtualDOM));
