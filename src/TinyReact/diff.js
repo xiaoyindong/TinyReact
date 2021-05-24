@@ -2,6 +2,7 @@ import mountElement from './mountElement';
 import updateTextNode from './updateTextNode';
 import updateNodeElement from './updateNodeElement';
 import createDOMElement from './createDOMElement';
+import unmountNode from './unmountNode';
 
 export default function diff(virtualDOM, container, oldDOM) {
     // 获取老的虚拟DOM对象
@@ -30,5 +31,15 @@ export default function diff(virtualDOM, container, oldDOM) {
         virtualDOM.children.forEach((child, i) => {
             diff(child, oldDOM, oldDOM.childNodes[i]);
         })
+        // 删除节点
+        // 获取旧节点
+        const oldChildNodes = oldDOM.childNodes;
+        // 判断旧节点的数量
+        if (oldChildNodes.length > virtualDOM.children.length) {
+            // 循环删除节点
+            for (let i = oldChildNodes.length - 1; i > virtualDOM.children.length -1; i--) {
+                unmountNode(oldChildNodes[i]);
+            }
+        }
     }
 }

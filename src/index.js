@@ -25,8 +25,6 @@ const modifyDOM = (
     <button onClick={() => {  alert("hello")}}>点击事件</button>
     <br />
     <input value="value" />
-    <br />
-    设置checked<input type="checkbox" checked="checked" />
   </div>
 )
 
