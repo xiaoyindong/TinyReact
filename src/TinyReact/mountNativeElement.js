@@ -5,4 +5,9 @@ export default function mountNativeElement(virtualDOM, container) {
     let newElement = createDOMElement(virtualDOM);
     // 将转换之后的DOM对象放在页面中
     container.appendChild(newElement);
+    // 获取实例对象
+    const component = virtualDOM.component;
+    if (component) {
+        component.setDOM(newElement);
+    }
 }

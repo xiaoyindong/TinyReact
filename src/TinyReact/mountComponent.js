@@ -31,5 +31,7 @@ function buildClassComponent (virtualDOM) {
     const component = new virtualDOM.type(virtualDOM.props || {});
     // 获得虚拟DOM对象
     const nextVirtualDOM = component.render();
+    // 存储实例对象
+    nextVirtualDOM.component = component;
     return nextVirtualDOM;
 }
