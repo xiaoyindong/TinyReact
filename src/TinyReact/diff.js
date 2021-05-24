@@ -3,10 +3,13 @@ import updateTextNode from './updateTextNode';
 import updateNodeElement from './updateNodeElement';
 import createDOMElement from './createDOMElement';
 import unmountNode from './unmountNode';
+import diffComponent from './diffComponent';
 
 export default function diff(virtualDOM, container, oldDOM) {
     // 获取老的虚拟DOM对象
     const oldVirtualDOM = oldDOM && oldDOM._virtualDOM;
+    // 获取旧的组件实例对象
+    const oldComponent = oldVirtualDOM.component;
     // 判断oldDOM是否在巡
     if (!oldDOM) {
         return mountElement(virtualDOM, container);
@@ -15,6 +18,13 @@ export default function diff(virtualDOM, container, oldDOM) {
         const newElement = createDOMElement(virtualDOM);
         // 替换DOM元素
         oldDOM.parentNode.replaceChild(newElement, oldDOM);
+    } else if (typeof virtualDOM.type === 'function') {
+        // 渲染是一个组件
+        // 第一个参数是组件本身的虚拟DOM对象，通过它可以获取到组件最新的props，
+        // 第二个参数是要更新的组件的实例对象，通过它可以调用组件的生命周期函数，可以更新组件的props属性，可以获取到组件返回的最新的虚拟DOM对象，
+        // 第三个参数是要更新的DOM对象，在更新组件时，需要在已有DOM对象的身上进行修改，实现DOM最小化操作，获取旧的虚拟DOM对象，
+        // 第四个参数是要更新到的容器元素
+        diffComponent(virtualDOM, oldComponent, oldDOM, container);
     } else if (oldVirtualDOM && virtualDOM.type === oldVirtualDOM.type) {
         // 两个元素类型相同，需要判断是文本类型节点还是元素类型节点
         // 文本类型直接更新内容

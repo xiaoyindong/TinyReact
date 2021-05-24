@@ -63,5 +63,9 @@ class Alert extends TinyReact.Component {
   }
 }
 
-TinyReact.render(<Alert />, root);
+TinyReact.render(<Alert name="yindong"/>, root);
+
+setTimeout(() => {
+  TinyReact.render(<Alert name="yd"/>, root);
+}, 2000)
 
