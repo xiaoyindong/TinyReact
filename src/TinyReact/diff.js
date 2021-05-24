@@ -13,7 +13,7 @@ export default function diff(virtualDOM, container, oldDOM) {
         // 如果标签类型不相同，并且不是组件。
         const newElement = createDOMElement(virtualDOM);
         // 替换DOM元素
-        oldDOM.parentNode.replaceChild(oldDOM, newElement);
+        oldDOM.parentNode.replaceChild(newElement, oldDOM);
     } else if (oldVirtualDOM && virtualDOM.type === oldVirtualDOM.type) {
         // 两个元素类型相同，需要判断是文本类型节点还是元素类型节点
         // 文本类型直接更新内容

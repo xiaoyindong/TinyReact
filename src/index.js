@@ -3,7 +3,7 @@ import TinyReact from "./TinyReact"
 const virtualDOM = (
   <div className="container">
     <h1>你好 我是虚拟DOM</h1>
-    <h2>有class名称的标签</h2>
+    <h2>没有class名称的标签h2标签</h2>
     {
         1 === 2 && <h1>布尔值节点</h1>
     }
@@ -18,7 +18,7 @@ const virtualDOM = (
 const modifyDOM = (
   <div className="container">
     <h1>你好 我是新的虚拟DOM</h1>
-    <h2 className="test">有class名称的标签</h2>
+    <h3 className="test">有class名称的标签h3标签</h3>
     {
         1 === 2 && <h1>布尔值节点</h1>
     }
