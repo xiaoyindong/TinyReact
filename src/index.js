@@ -17,8 +17,10 @@ const virtualDOM = (
 
 const root = document.getElementById('root');
 
-function Head () {
-  return <div>Head</div>
+function Head (props) {
+  return <div>
+    {props.title}
+  </div>
 }
 
-TinyReact.render(<Head />, root);
+TinyReact.render(<Head title="hello"/>, root);
