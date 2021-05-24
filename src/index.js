@@ -23,4 +23,13 @@ function Head (props) {
   </div>
 }
 
-TinyReact.render(<Head title="hello"/>, root);
+class Alert extends TinyReact.Component {
+  constructor(props) {
+    super(props);
+  }
+  render() {
+    return <div>{this.props.name} {this.props.age}</div>
+  }
+}
+
+TinyReact.render(<Alert name="yindong" age={18}/>, root);

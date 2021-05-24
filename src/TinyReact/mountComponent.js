@@ -9,6 +9,9 @@ export default function mountComponent(virtualDOM, container) {
     if (isFunctionComponent(virtualDOM)) {
         // 处理函数组件
         nextVirtualDOM = buildFunctionComponent(virtualDOM);
+    } else {
+        // 处理类组件
+        nextVirtualDOM = buildClassComponent(virtualDOM);
     }
     if (isFunction(nextVirtualDOM)) {
         mountComponent(nextVirtualDOM, container);
@@ -17,6 +20,16 @@ export default function mountComponent(virtualDOM, container) {
     mountNativeElement(nextVirtualDOM, container);
 }
 
+// 处理函数组件
 function buildFunctionComponent (virtualDOM) {
     return virtualDOM.type(virtualDOM.props || {});
+}
+
+// 处理类组件
+function buildClassComponent (virtualDOM) {
+    // 获取实例对象
+    const component = new virtualDOM.type(virtualDOM.props || {});
+    // 获得虚拟DOM对象
+    const nextVirtualDOM = component.render();
+    return nextVirtualDOM;
 }
