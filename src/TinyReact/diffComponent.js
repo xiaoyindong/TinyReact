@@ -1,8 +1,10 @@
 import mountElement from "./mountElement";
+import updateComponent from './updateComponent';
 
 export default function diffComponent(virtualDOM, oldComponent, oldDOM, container) {
     if (isSameComponent(virtualDOM, oldComponent)) {
         // 是同一个组件
+        updateComponent(virtualDOM, oldComponent, oldDOM, container);
     } else {
         // 不是同一个组件
         // 替换页面原有的对象，也就是删除原有DOM，增加新的DOM

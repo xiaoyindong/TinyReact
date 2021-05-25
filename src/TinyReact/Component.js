@@ -19,4 +19,16 @@ export default class Component {
     getDOM () { // 获取页面展示的DOM
         return this._dom;
     }
+    updateProps(props) {
+        this.props = props;
+    }
+    componentWillMount() {}
+    componentDidMount() {}
+    componentWillReceviceProps(nextProps) {}
+    shouldComponentUpdate(nextProps, nextState) {
+        return nextProps !== this.props || nextState !== this.state;
+    }
+    componentWillUpdate(nextProps, nextState) {}
+    componentDidUpdate(prevProps, preState) {}
+    componentWillUnmount() {}
 }

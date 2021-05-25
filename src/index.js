@@ -55,6 +55,7 @@ class Alert extends TinyReact.Component {
   render() {
     return <div>
       <div>{this.state.title}</div>
+      <p>{this.props.name}</p>
       <button 
       onClick={() => {
         this.handileClick();

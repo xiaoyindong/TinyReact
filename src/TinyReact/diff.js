@@ -9,7 +9,7 @@ export default function diff(virtualDOM, container, oldDOM) {
     // 获取老的虚拟DOM对象
     const oldVirtualDOM = oldDOM && oldDOM._virtualDOM;
     // 获取旧的组件实例对象
-    const oldComponent = oldVirtualDOM.component;
+    const oldComponent = oldVirtualDOM && oldVirtualDOM.component;
     // 判断oldDOM是否在巡
     if (!oldDOM) {
         return mountElement(virtualDOM, container);
@@ -47,7 +47,7 @@ export default function diff(virtualDOM, container, oldDOM) {
         // 判断旧节点的数量
         if (oldChildNodes.length > virtualDOM.children.length) {
             // 循环删除节点
-            for (let i = oldChildNodes.length - 1; i > virtualDOM.children.length -1; i--) {
+            for (let i = oldChildNodes.length - 1; i > virtualDOM.children.length - 1; i--) {
                 unmountNode(oldChildNodes[i]);
             }
         }
