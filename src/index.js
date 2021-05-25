@@ -56,11 +56,7 @@ class Demo extends TinyReact.Component {
       <button 
       onClick={() => {
         this.setState({
-          data: [
-            1,
-            2,
-            3,
-          ]
+          data: [2, 3, 4]
         })
       }}>获取内容</button>
     </div>
