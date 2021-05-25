@@ -5,6 +5,8 @@ import mountNativeElement from './mountNativeElement';
 export default function mountComponent(virtualDOM, container, oldDOM) {
     //存储得到的虚拟DOM
     let nextVirtualDOM = null;
+    // 用于存储实例对象
+    let component = null;
     // 判断组件是类组件还是函数组件
     if (isFunctionComponent(virtualDOM)) {
         // 处理函数组件
@@ -12,9 +14,17 @@ export default function mountComponent(virtualDOM, container, oldDOM) {
     } else {
         // 处理类组件
         nextVirtualDOM = buildClassComponent(virtualDOM);
+        component = nextVirtualDOM.component;
     }
     if (isFunction(nextVirtualDOM)) {
         mountComponent(nextVirtualDOM, container);
+    }
+    if (component) {
+        component.componentDidMount();
+    }
+    // 执行ref
+    if (component && component.props && component.props.ref) {
+        omponent.props.ref(component);
     }
     // 渲染nextVirtualDOM
     mountNativeElement(nextVirtualDOM, container, oldDOM);

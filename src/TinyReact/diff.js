@@ -26,6 +26,7 @@ export default function diff(virtualDOM, container, oldDOM) {
         // 第四个参数是要更新到的容器元素
         diffComponent(virtualDOM, oldComponent, oldDOM, container);
     } else if (oldVirtualDOM && virtualDOM.type === oldVirtualDOM.type) {
+
         // 两个元素类型相同，需要判断是文本类型节点还是元素类型节点
         // 文本类型直接更新内容
         // 元素类型就要更新标签的属性
@@ -37,10 +38,46 @@ export default function diff(virtualDOM, container, oldDOM) {
             // 要更新的哪个元素，更新的虚拟DOM，旧的虚拟DOM
             updateNodeElement(oldDOM, virtualDOM, oldVirtualDOM)
         }
-        // 遍历子元素进行对比
-        virtualDOM.children.forEach((child, i) => {
-            diff(child, oldDOM, oldDOM.childNodes[i]);
-        })
+
+        // 将拥有key属性的子元素放置在一个单独的对象中
+        const keyedElements = {};
+        for (let i = 0, len = oldDOM.childNodes.length; i < len; i++) {
+            let domElement = oldDOM.childNodes[i];
+            // 判断节点类型，元素节点才获取
+            if (domElement.nodeType === 1) {
+                const key = domElement.getAttribute('key')
+                if (key) {
+                    keyedElements[key] = domElement;
+                }
+            }
+        }
+        
+        let hasNoKey = Object.keys(keyedElements).length === 0;
+
+        if (hasNoKey) {
+            // 遍历子元素进行对比
+            virtualDOM.children.forEach((child, i) => {
+                diff(child, oldDOM, oldDOM.childNodes[i]);
+            })
+        } else {
+            // 循环要渲染的虚拟DOM的子元素，获取子元素的key属性
+            virtualDOM.children.forEach((child, i) => {
+                const key = child.props.key;
+                if (key) {
+                    const domElement = keyedElements[key];
+                    if (domElement) {
+                        // 查看当前位置的元素是否是我们期望的元素，如果不是就插入到这个位置
+                        if (oldDOM.childNodes[i] && oldDOM.childNodes[i] !== domElement) {
+                            oldDOM.insertBefore(domElement, oldDOM.childNodes[i]);
+                        }
+                    }
+                } else {
+                    // 新增元素
+                    mountElement(child, oldDOM)
+                }
+            })
+        }
+
         // 删除节点
         // 获取旧节点
         const oldChildNodes = oldDOM.childNodes;

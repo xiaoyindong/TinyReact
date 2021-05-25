@@ -38,35 +38,35 @@ const root = document.getElementById('root');
 // }
 
 
-class Alert extends TinyReact.Component {
+class Demo extends TinyReact.Component {
   constructor(props) {
     super(props);
     this.state = {
-      title: 'default'
+      data: [1, 2, 3, 4]
     }
-    this.handileClick = this.handileClick.bind(this);
   }
 
-  handileClick() {
-    this.setState({
-      title: 'Changed'
-    })
-  }
   render() {
     return <div>
-      <div>{this.state.title}</div>
-      <p>{this.props.name}</p>
+      <div>
+        {
+          this.state.data.map(item => <p key={item}>{item}</p>)
+        }
+      </div>
       <button 
       onClick={() => {
-        this.handileClick();
-      }}>改变Title</button>
+        this.setState({
+          data: [
+            4,
+            1,
+            2,
+            3
+          ]
+        })
+      }}>获取内容</button>
     </div>
   }
 }
 
-TinyReact.render(<Alert name="yindong"/>, root);
-
-setTimeout(() => {
-  TinyReact.render(<Alert name="yd"/>, root);
-}, 2000)
+TinyReact.render(<Demo name="yindong"/>, root);
 
